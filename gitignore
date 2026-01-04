@@ -1,0 +1,4 @@
+# Docker 데이터 폴더 제외
+ha-db-volume/
+.env
+*.log

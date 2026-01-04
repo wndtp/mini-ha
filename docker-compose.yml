@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  ha-maria:
+    image: mariadb:latest
+    container_name: ha-maria
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: ha-db
+      MARIADB_USER: ha-user
+      MARIADB_PASSWORD: user
+      TZ: Asia/Seoul
+    ports:
+      - "3306:3306"
+    volumes:
+      - ha-db-volume:/var/lib/mysql
+      - ./initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - ha-net
+    command: 
+      - --character-set-server=utf8mb4 
+      - --collation-server=utf8mb4_unicode_ci
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - ha-net    
+
+networks:
+  ha-net:
+    driver: bridge
+
+volumes:
+  ha-db-volume:
