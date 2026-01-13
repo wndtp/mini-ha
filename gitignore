@@ -2,3 +2,4 @@
 ha-db-volume/
 .env
 *.log
+.env
